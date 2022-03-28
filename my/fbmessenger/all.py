@@ -7,7 +7,6 @@ from .common import Message, _merge_messages
 
 
 src_export  = import_source(module_name=f'my.fbmessenger.export')
-src_android = import_source(module_name=f'my.fbmessenger.android')
 
 
 @src_export
@@ -29,17 +28,9 @@ def _messages_export() -> Iterator[Res[Message]]:
             m2: Message = m
             yield m2
 
-
-@src_android
-def _messages_android() -> Iterator[Res[Message]]:
-    from . import android
-    yield from android.messages()
-
-
 def messages() -> Iterator[Res[Message]]:
     yield from _merge_messages(
         _messages_export(),
-        _messages_android(),
     )
 
 
